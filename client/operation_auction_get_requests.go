@@ -82,10 +82,23 @@ func getBestProfit() {
 					// log.Info("buy price: " + strconv.Itoa(sellOrder.Price/10000))
 					// log.Info("sell price: " + strconv.Itoa(buyOrder.Price/10000))
 					// log.Info(profit + " silver profit, buy " + name + " with " + quality + " quality and enchantment level " + enchantmentLevel)
+					var buyLocation string
+					var sellLocation string
+					for _, location := range world {
+						if location.Index == strconv.Itoa(sellOrder.LocationID) {
+							buyLocation = location.UniqueName
+						}
+						if location.Index == strconv.Itoa(buyOrder.LocationID) {
+							sellLocation = location.UniqueName
+						}
+						if sellLocation == "Caerleon" {
+							sellLocation = "Black Market"
+						}
+					}
 					fmt.Println("")
-					fmt.Println("buy price: " + strconv.Itoa(sellOrder.Price/10000))
-					fmt.Println("sell price: " + strconv.Itoa(buyOrder.Price/10000))
-					fmt.Println(profit + " silver profit, buy " + name + " with " + quality + " quality and enchantment level " + enchantmentLevel)
+					fmt.Println("buy at " + buyLocation + ", price: " + strconv.Itoa(sellOrder.Price/10000))
+					fmt.Println("sell at " + sellLocation + ", price: " + strconv.Itoa(buyOrder.Price/10000))
+					fmt.Println("Profit: " + profit + " silver , buy " + name + " with " + quality + " quality and enchantment level " + enchantmentLevel)
 					fmt.Println("")
 				}
 			}
@@ -129,7 +142,7 @@ func (op operationAuctionGetRequestsResponse) Process(state *albionState) {
 		return
 	}
 
-	log.Infof("Sending %d market requests to ingest", len(orders))
+	log.Infof("Found %d new market requests", len(orders))
 	log.Infof("Total length: %d", len(allRequests))
 
 	getBestProfit()

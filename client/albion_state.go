@@ -7,7 +7,7 @@ import (
 	// "strings"
 )
 
-//CacheSize limit size of messages in cache
+// CacheSize limit size of messages in cache
 const CacheSize = 8192
 
 type marketHistoryInfo struct {
@@ -45,7 +45,7 @@ func (state albionState) IsValidLocation() bool {
 				notification.Push("The players location is not valid. Please transition zones so the location can be fixed.")
 			}
 		}
-		// return false
+		return false
 	}
 	return true
 }

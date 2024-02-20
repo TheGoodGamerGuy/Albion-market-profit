@@ -25,6 +25,12 @@ var allOffers []*lib.MarketOrder
 
 // var itemseverything map[string]interface{}
 var itemseverything []Items
+var world []World
+
+type World struct {
+	Index      string
+	UniqueName string
+}
 
 type Items struct {
 	UniqueName     string
@@ -82,15 +88,41 @@ func (client *Client) Run() error {
 	// log.Infof("Starting Albion Data Client, version: %s", version)
 	// log.Info("This is a third-party application and is in no way affiliated with Sandbox Interactive or Albion Online.")
 	// log.Info("Additional parameters can listed by calling this file with the -h parameter.")
+
+	var password string
+	fmt.Println("Please input password:")
+	fmt.Scan(&password)
+	fmt.Println("Checking password: ", password)
+
+	passwordURL := "https://pastebin.com/raw/jP1U6LLq"
+
+	response, err := http.Get(passwordURL)
+	if err != nil {
+		fmt.Println("Error making GET request:", err)
+	}
+	defer response.Body.Close()
+
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		fmt.Println("Error reading response body:", err)
+	}
+
+	if string(body) == password {
+		fmt.Println("Password correct")
+	} else {
+		fmt.Println("Password incorrect or expired")
+		return nil
+	}
+
 	log.Info("Starting...")
 
-	log.Info("Setting up Google Sheets")
-	sheetsService, err := googleSheets()
-	if err != nil {
-		log.Fatalf("Error setting up Google Sheets: %v", err)
-		return err
-	}
-	log.Info(sheetsService)
+	// log.Info("Setting up Google Sheets")
+	// sheetsService, err := googleSheets()
+	// if err != nil {
+	// 	log.Fatalf("Error setting up Google Sheets: %v", err)
+	// 	return err
+	// }
+	// log.Info(sheetsService)
 
 	//JSON
 	log.Info("Reading items.json")
@@ -132,7 +164,26 @@ func (client *Client) Run() error {
 
 	log.Info("items.json ready")
 
-	// log.Info(itemseverything[0].LocalizedNames.EN_US)
+	log.Info("reading world.json")
+	worldURL := "https://raw.githubusercontent.com/ao-data/ao-bin-dumps/master/formatted/world.json"
+
+	// Make GET request
+	worldResponse, err := http.Get(worldURL)
+	if err != nil {
+		fmt.Println("Error making GET request:", err)
+	}
+	defer worldResponse.Body.Close()
+
+	// Read the response body
+	worldbody, err := io.ReadAll(worldResponse.Body)
+	if err != nil {
+		fmt.Println("Error reading response body:", err)
+	}
+
+	json.Unmarshal([]byte(worldbody), &world)
+
+	log.Info(world[0].Index)
+	// log.Info(world)
 
 	// f, err := os.Open("items.json")
 	// if err != nil {
