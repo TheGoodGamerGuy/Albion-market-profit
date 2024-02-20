@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 package client
@@ -7,7 +8,6 @@ import (
 	"os"
 	"strings"
 	"syscall"
-	"unicode/utf16"
 	"unsafe"
 
 	"golang.org/x/sys/windows"
@@ -68,19 +68,19 @@ func physicalAddrToString(physAddr [8]byte) string {
 	return string(buf)
 }
 
-func cStringToString(cs *uint16) (s string) {
-	if cs != nil {
-		us := make([]uint16, 0, 256)
-		for p := uintptr(unsafe.Pointer(cs)); ; p += 2 {
-			u := *(*uint16)(unsafe.Pointer(p))
-			if u == 0 {
-				return string(utf16.Decode(us))
-			}
-			us = append(us, u)
-		}
-	}
-	return ""
-}
+// func cStringToString(cs *uint16) (s string) {
+// 	if cs != nil {
+// 		us := make([]uint16, 0, 256)
+// 		for p := uintptr(unsafe.Pointer(cs)); ; p += 2 {
+// 			u := *(*uint16)(unsafe.Pointer(p))
+// 			if u == 0 {
+// 				return string(utf16.Decode(us))
+// 			}
+// 			us = append(us, u)
+// 		}
+// 	}
+// 	return ""
+// }
 
 // Gets all physical interfaces based on filter results, ignoring all VM, Loopback and Tunnel interfaces.
 func getAllPhysicalInterface() ([]string, error) {

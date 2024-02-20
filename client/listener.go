@@ -163,7 +163,6 @@ func (l *listener) processPacket(packet gopacket.Packet) {
 
 	layer := packet.Layer(photon.PhotonLayerType)
 
-
 	if layer == nil {
 		return
 	}
