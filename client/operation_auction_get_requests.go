@@ -58,9 +58,15 @@ func getBestProfit() {
 			if sellOrder.ItemID == name && sellOrder.QualityLevel >= quality {
 				var profit = ((buyOrder.Price - (buyOrder.Price * 4 / 100)) - sellOrder.Price) / 10000
 				if profit > 0 {
-					for _, item := range itemseverything {
-						if item.UniqueName == name {
-							name = item.LocalizedNames.EN_US
+					// for _, item := range itemseverything {
+					// 	if item.UniqueName == name {
+					// 		name = item.LocalizedNames.EN_US
+					// 		break
+					// 	}
+					// }
+					for _, item := range items {
+						if item[0] == name {
+							name = item[1]
 							break
 						}
 					}
@@ -84,12 +90,23 @@ func getBestProfit() {
 					// log.Info(profit + " silver profit, buy " + name + " with " + quality + " quality and enchantment level " + enchantmentLevel)
 					var buyLocation string
 					var sellLocation string
-					for _, location := range world {
-						if location.Index == strconv.Itoa(sellOrder.LocationID) {
-							buyLocation = location.UniqueName
+					// for _, location := range world {
+					// 	if location.Index == strconv.Itoa(sellOrder.LocationID) {
+					// 		buyLocation = location.UniqueName
+					// 	}
+					// 	if location.Index == strconv.Itoa(buyOrder.LocationID) {
+					// 		sellLocation = location.UniqueName
+					// 	}
+					// 	if sellLocation == "Caerleon" {
+					// 		sellLocation = "Black Market"
+					// 	}
+					// }
+					for _, location := range worlds {
+						if location[0] == strconv.Itoa(sellOrder.LocationID) {
+							buyLocation = location[1]
 						}
-						if location.Index == strconv.Itoa(buyOrder.LocationID) {
-							sellLocation = location.UniqueName
+						if location[0] == strconv.Itoa(buyOrder.LocationID) {
+							sellLocation = location[1]
 						}
 						if sellLocation == "Caerleon" {
 							sellLocation = "Black Market"
