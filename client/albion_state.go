@@ -45,7 +45,7 @@ func (state albionState) IsValidLocation() bool {
 				notification.Push("The players location is not valid. Please transition zones so the location can be fixed.")
 			}
 		}
-		return false
+		// return false
 	}
 	return true
 }

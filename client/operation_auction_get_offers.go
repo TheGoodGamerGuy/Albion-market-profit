@@ -57,18 +57,4 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState) {
 	log.Infof("Total length: %d", len(allOffers))
 
 	getBestProfit()
-
-	// record := extractFields(orders)
-	// spreadsheetId := "1q34v4KwaJAFK7-L1pubIIuKm-qBPIHu1cFC_k9rqWWg"
-	// name := "instabuy"
-	// valueInputOption := "USER_ENTERED"
-	// insertDataOption := "INSERT_ROWS"
-
-	// rb := &sheets.ValueRange{
-	// 	Values: record,
-	// }
-	// response, err := globalSheetService.Spreadsheets.Values.Append(spreadsheetId, name, rb).ValueInputOption(valueInputOption).InsertDataOption(insertDataOption).Context(ctx).Do()
-	// if err != nil || response.HTTPStatusCode != 200 {
-	// 	log.Error(err)
-	// }
 }
