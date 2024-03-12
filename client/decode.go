@@ -22,8 +22,8 @@ func decodeRequest(params map[uint8]interface{}) (operation operation, err error
 		operation = &operationGetGameServerByCluster{}
 	case opAuctionGetOffers:
 		operation = &operationAuctionGetOffers{}
-	case opAuctionGetItemAverageStats:
-		operation = &operationAuctionGetItemAverageStats{}
+	// case opAuctionGetItemAverageStats:
+	// 	operation = &operationAuctionGetItemAverageStats{}
 	case opGetClusterMapInfo:
 		operation = &operationGetClusterMapInfo{}
 	// case opGoldMarketGetAverageInfo:
@@ -57,8 +57,8 @@ func decodeResponse(params map[uint8]interface{}) (operation operation, err erro
 		operation = &operationAuctionGetRequestsResponse{}
 	case opAuctionBuyOffer:
 		operation = &operationAuctionGetRequestsResponse{}
-	case opAuctionGetItemAverageStats:
-		operation = &operationAuctionGetItemAverageStatsResponse{}
+	// case opAuctionGetItemAverageStats:
+	// 	operation = &operationAuctionGetItemAverageStatsResponse{}
 	// case opGetMailInfos:
 	// 	operation = &operationGetMailInfosResponse{}
 	// case opReadMail:

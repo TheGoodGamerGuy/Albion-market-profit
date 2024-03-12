@@ -73,11 +73,11 @@ func (m *MarketExpiryNotification) Type() MarketNotificationType {
 	return ExpiryNotification
 }
 
-type MarketNotificationUpload struct {
-	PrivateUpload
-	Type         MarketNotificationType `json:"NotificationType"`
-	Notification MarketNotification     `json:"Notification"`
-}
+// type MarketNotificationUpload struct {
+// 	PrivateUpload
+// 	Type         MarketNotificationType `json:"NotificationType"`
+// 	Notification MarketNotification     `json:"Notification"`
+// }
 
 // MarketUpload contains a list of orders
 type MarketUpload struct {

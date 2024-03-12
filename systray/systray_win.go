@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 package systray
@@ -8,7 +9,6 @@ import (
 
 	"github.com/ao-data/albiondata-client/client"
 
-	"github.com/ao-data/albiondata-client/icon"
 	"github.com/getlantern/systray"
 	"github.com/gonutz/w32"
 )
@@ -62,11 +62,11 @@ func onReady() {
 	if client.ConfigGlobal.Minimize {
 		hideConsole()
 	}
-	systray.SetIcon(icon.Data)
-	systray.SetTitle("Albion Data Client")
-	systray.SetTooltip("Albion Data Client")
+	// systray.SetIcon(icon.Data)
+	systray.SetTitle("Albionshit")
+	systray.SetTooltip("Shitty albion profit calculator")
 	mConHideShow := systray.AddMenuItem(GetActionTitle(), "Show/Hide Console")
-	mQuit := systray.AddMenuItem("Quit", "Close the Albion Data Client")
+	mQuit := systray.AddMenuItem("Quit", "Close the Albionshit")
 
 	func() {
 		for {

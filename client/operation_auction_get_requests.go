@@ -52,7 +52,7 @@ func (op operationAuctionGetRequestsResponse) Process(state *albionState) {
 	log.Infof("Found %d new market requests", len(orders))
 	log.Infof("Total length: %d", len(allRequests))
 
-	getBestCraftingProfit()
+	// getBestCraftingProfit()
 	getBestProfit()
 
 }

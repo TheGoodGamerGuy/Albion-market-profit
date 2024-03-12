@@ -3,6 +3,9 @@ package client
 import (
 	"fmt"
 	"strconv"
+
+	"github.com/ao-data/albiondata-client/lib"
+	"github.com/ao-data/albiondata-client/log"
 )
 
 var allRecipes []AllItemRecipes
@@ -25,8 +28,14 @@ type Recipe struct {
 }
 
 type Resource struct {
-	name   string
-	amount string
+	name        string
+	amount      int
+	singlePrice int
+	fullPrice   int
+}
+
+type SellOrders struct {
+	sellOrder lib.MarketOrder
 }
 
 func getBestProfit() {
@@ -36,7 +45,7 @@ func getBestProfit() {
 		for _, sellOrder := range allOffers {
 			if sellOrder.ItemID == preciseName && sellOrder.QualityLevel >= quality {
 				var profit = ((buyOrder.Price - (buyOrder.Price * 4 / 100)) - sellOrder.Price) / 10000
-				if profit > 0 {
+				if profit-40000 > 0 {
 					profit := strconv.Itoa(profit)
 
 					// item name
@@ -88,6 +97,33 @@ func getBestProfit() {
 				}
 			}
 		}
+		// for _, sellOrderRecipe := range allRecipes {
+		// 	if sellOrderRecipe.name == buyOrder.ItemID {
+		// 		for _, recipe := range sellOrderRecipe.itemRecipes.allRecipes {
+		// 			resourcelength := 0
+		// 			for _, resource := range recipe.resource {
+		// 				for _, sellOrder := range allOffers {
+		// 					if sellOrder.ItemID == resource.name {
+		// 						for _, preciseSellOrder := range allOffers {
+
+		// 							if preciseSellOrder.ItemID == resource.name {
+
+		// 							}
+		// 						}
+		// 						// resourcelength++
+		// 						// break
+		// 					}
+		// 				}
+		// 			}
+		// 			if resourcelength == len(recipe.resource) {
+		// 				fmt.Println("")
+		// 				fmt.Println(sellOrderRecipe.name)
+		// 				fmt.Println(recipe.resource)
+		// 				fmt.Println("")
+		// 			}
+		// 		}
+		// 	}
+		// }
 	}
 }
 
@@ -111,13 +147,21 @@ func getBestCraftingProfit() {
 								var resource Resource
 								fourth := third.(map[string]interface{})
 								resource.name = fourth["@uniquename"].(string)
-								resource.amount = fourth["@count"].(string)
+								amount, err := strconv.Atoi(fourth["@count"].(string))
+								if err != nil {
+									log.Error(err)
+								}
+								resource.amount = amount
 								recipe.resource = append(recipe.resource, resource)
 							}
 						case map[string]interface{}:
 							var resource Resource
 							resource.name = second["@uniquename"].(string)
-							resource.amount = second["@count"].(string)
+							amount, err := strconv.Atoi(second["@count"].(string))
+							if err != nil {
+								log.Error(err)
+							}
+							resource.amount = amount
 							recipe.resource = append(recipe.resource, resource)
 						}
 						itemRecipe.allRecipes = append(itemRecipe.allRecipes, recipe)
@@ -130,64 +174,21 @@ func getBestCraftingProfit() {
 							var resource Resource
 							fourth := third.(map[string]interface{})
 							resource.name = fourth["@uniquename"].(string)
-							resource.amount = fourth["@count"].(string)
-							recipe.resource = append(recipe.resource, resource)
-						}
-					case map[string]interface{}:
-						var resource Resource
-						resource.name = second["@uniquename"].(string)
-						resource.amount = second["@count"].(string)
-						recipe.resource = append(recipe.resource, resource)
-					}
-					itemRecipe.allRecipes = append(itemRecipe.allRecipes, recipe)
-				}
-				allItemRecipe.itemRecipes = itemRecipe
-				allRecipes = append(allRecipes, allItemRecipe)
-				break
-			}
-		}
-		for _, transweapon := range allitems.Transformationweapon {
-			if transweapon.Uniquename == name {
-				var allItemRecipe AllItemRecipes
-				allItemRecipe.name = name
-				var itemRecipe ItemRecipes
-				switch first := transweapon.Craftingrequirements.(type) {
-				case []interface{}:
-					for _, secondfa := range first {
-						var recipe Recipe
-						thirdfa := secondfa.(map[string]interface{})
-						switch second := thirdfa["craftresource"].(type) {
-						case []interface{}:
-							for _, third := range second {
-								var resource Resource
-								fourth := third.(map[string]interface{})
-								resource.name = fourth["@uniquename"].(string)
-								resource.amount = fourth["@count"].(string)
-								recipe.resource = append(recipe.resource, resource)
+							amount, err := strconv.Atoi(fourth["@count"].(string))
+							if err != nil {
+								log.Error(err)
 							}
-						case map[string]interface{}:
-							var resource Resource
-							resource.name = second["@uniquename"].(string)
-							resource.amount = second["@count"].(string)
-							recipe.resource = append(recipe.resource, resource)
-						}
-						itemRecipe.allRecipes = append(itemRecipe.allRecipes, recipe)
-					}
-				case map[string]interface{}:
-					var recipe Recipe
-					switch second := first["craftresource"].(type) {
-					case []interface{}:
-						for _, third := range second {
-							var resource Resource
-							fourth := third.(map[string]interface{})
-							resource.name = fourth["@uniquename"].(string)
-							resource.amount = fourth["@count"].(string)
+							resource.amount = amount
 							recipe.resource = append(recipe.resource, resource)
 						}
 					case map[string]interface{}:
 						var resource Resource
 						resource.name = second["@uniquename"].(string)
-						resource.amount = second["@count"].(string)
+						amount, err := strconv.Atoi(second["@count"].(string))
+						if err != nil {
+							log.Error(err)
+						}
+						resource.amount = amount
 						recipe.resource = append(recipe.resource, resource)
 					}
 					itemRecipe.allRecipes = append(itemRecipe.allRecipes, recipe)
@@ -197,6 +198,57 @@ func getBestCraftingProfit() {
 				break
 			}
 		}
+		// 	for _, transweapon := range allitems.Transformationweapon {
+		// 		if transweapon.Uniquename == name {
+		// 			var allItemRecipe AllItemRecipes
+		// 			allItemRecipe.name = name
+		// 			var itemRecipe ItemRecipes
+		// 			switch first := transweapon.Craftingrequirements.(type) {
+		// 			case []interface{}:
+		// 				for _, secondfa := range first {
+		// 					var recipe Recipe
+		// 					thirdfa := secondfa.(map[string]interface{})
+		// 					switch second := thirdfa["craftresource"].(type) {
+		// 					case []interface{}:
+		// 						for _, third := range second {
+		// 							var resource Resource
+		// 							fourth := third.(map[string]interface{})
+		// 							resource.name = fourth["@uniquename"].(string)
+		// 							resource.amount = fourth["@count"].(string)
+		// 							recipe.resource = append(recipe.resource, resource)
+		// 						}
+		// 					case map[string]interface{}:
+		// 						var resource Resource
+		// 						resource.name = second["@uniquename"].(string)
+		// 						resource.amount = second["@count"].(string)
+		// 						recipe.resource = append(recipe.resource, resource)
+		// 					}
+		// 					itemRecipe.allRecipes = append(itemRecipe.allRecipes, recipe)
+		// 				}
+		// 			case map[string]interface{}:
+		// 				var recipe Recipe
+		// 				switch second := first["craftresource"].(type) {
+		// 				case []interface{}:
+		// 					for _, third := range second {
+		// 						var resource Resource
+		// 						fourth := third.(map[string]interface{})
+		// 						resource.name = fourth["@uniquename"].(string)
+		// 						resource.amount = fourth["@count"].(string)
+		// 						recipe.resource = append(recipe.resource, resource)
+		// 					}
+		// 				case map[string]interface{}:
+		// 					var resource Resource
+		// 					resource.name = second["@uniquename"].(string)
+		// 					resource.amount = second["@count"].(string)
+		// 					recipe.resource = append(recipe.resource, resource)
+		// 				}
+		// 				itemRecipe.allRecipes = append(itemRecipe.allRecipes, recipe)
+		// 			}
+		// 			allItemRecipe.itemRecipes = itemRecipe
+		// 			allRecipes = append(allRecipes, allItemRecipe)
+		// 			break
+		// 		}
+		// 	}
 	}
 	// fmt.Println(allRecipes)
 }
