@@ -90,7 +90,6 @@ const (
 	opFarmableGetProduct
 	opFarmableFill
 	opTearDownConstructionSite
-	opPlaceholder1
 	opAuctionCreateOffer
 	opAuctionCreateRequest
 	opAuctionGetOffers

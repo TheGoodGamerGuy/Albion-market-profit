@@ -198,6 +198,12 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 
 	msg, err := command.ReliableMessage()
 	if err != nil {
+
+		if fmt.Sprint(err) == "Encryption not supported" && l.router.albionstate.WaitingForMarketData == true {
+			l.router.albionstate.WaitingForMarketData = false
+			log.Info("Market data is encrypted. Your account is too new or some shit.")
+		}
+
 		if !ConfigGlobal.DebugIgnoreDecodingErrors {
 			log.Debugf("Could not decode reliable message: %v - %v", err, base64.StdEncoding.EncodeToString(command.Data))
 		}

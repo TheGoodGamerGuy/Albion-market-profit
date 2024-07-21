@@ -45,7 +45,7 @@ func getBestProfit() {
 		for _, sellOrder := range allOffers {
 			if sellOrder.ItemID == preciseName && sellOrder.QualityLevel >= quality {
 				var profit = ((buyOrder.Price - (buyOrder.Price * 4 / 100)) - sellOrder.Price) / 10000
-				if profit-40000 > 0 {
+				if profit-0 > 0 {
 					profit := strconv.Itoa(profit)
 
 					// item name

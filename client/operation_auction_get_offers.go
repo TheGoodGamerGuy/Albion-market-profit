@@ -20,6 +20,7 @@ type operationAuctionGetOffers struct {
 
 func (op operationAuctionGetOffers) Process(state *albionState) {
 	log.Debug("Got AuctionGetOffers operation...")
+	state.WaitingForMarketData = true
 }
 
 type operationAuctionGetOffersResponse struct {
@@ -28,6 +29,7 @@ type operationAuctionGetOffersResponse struct {
 
 func (op operationAuctionGetOffersResponse) Process(state *albionState) {
 	log.Debug("Got response to AuctionGetOffers operation...")
+	state.WaitingForMarketData = false
 
 	if !state.IsValidLocation() {
 		return
@@ -53,7 +55,7 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState) {
 		return
 	}
 
-	log.Infof("Found %d new market requests", len(orders))
+	log.Infof("Found %d new market offers", len(orders))
 	log.Infof("Total length: %d", len(allOffers))
 
 	getBestProfit()

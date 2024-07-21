@@ -17,12 +17,13 @@ const CacheSize = 8192
 // }
 
 type albionState struct {
-	LocationId     int
-	LocationString string
-	CharacterId    lib.CharacterID
-	CharacterName  string
-	GameServerIP   string
-	AODataServerID int
+	LocationId           int
+	LocationString       string
+	CharacterId          lib.CharacterID
+	CharacterName        string
+	GameServerIP         string
+	AODataServerID       int
+	WaitingForMarketData bool
 
 	// A lot of information is sent out but not contained in the response when requesting marketHistory (e.g. ID)
 	// This information is stored in marketHistoryInfo
