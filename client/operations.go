@@ -11,7 +11,8 @@ type operation interface {
 //               "MarleyTheMongolianMoose: AuctionGetItemsAverage == 92 == kind
 //               of looks like it disappears in the new one"
 
-//OperationType used to identify operation types
+// OperationType used to identify operation types
+//
 //go:generate stringer -type=OperationType
 type OperationType uint16
 
@@ -89,7 +90,7 @@ const (
 	opFarmableGetProduct
 	opFarmableFill
 	opTearDownConstructionSite
-	opCastleGateUse
+	opPlaceholder1
 	opAuctionCreateOffer
 	opAuctionCreateRequest
 	opAuctionGetOffers
@@ -269,6 +270,8 @@ const (
 	opUseLootChest
 	opUseShrine
 	opUseHellgateShrine
+	opUseSiegeBanner
+	opGetSiegeBannerInfo
 	opLaborerStartJob
 	opLaborerTakeJobLoot
 	opLaborerDismiss
@@ -320,8 +323,8 @@ const (
 	opClientLowMemoryWarning
 	opTerritoryClaimStart
 	opTerritoryClaimCancel
-	opClaimPowerCrystalStart
-	opClaimPowerCrystalCancel
+	opDeliverCarriableObjectStart
+	opDeliverCarriableObjectCancel
 	opTerritoryUpgradeWithPowerCrystal
 	opRequestAppStoreProducts
 	opVerifyProductPurchase
@@ -447,8 +450,8 @@ const (
 	opGetFactionWarfareCampaignData
 	opClaimFactionWarfareItemReward
 	opSendMemoryConsumption
-	opPickupPowerCrystalStart
-	opPickupPowerCrystalCancel
+	opPickupCarriableObjectStart
+	opPickupCarriableObjectCancel
 	opSetSavingChestLogsFlag
 	opGetSavingChestLogsFlag
 	opRegisterGuestAccount
@@ -509,4 +512,6 @@ const (
 	opGvGSeasonPlayerGuildParticipationDetails
 	opDailyMightBonus
 	opClaimDailyMightBonus
+	opGetFortificationGroupInfo
+	opUpgradeFortificationGroup
 )

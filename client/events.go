@@ -1,6 +1,7 @@
 package client
 
-//EventType used to identify event types
+// EventType used to identify event types
+//
 //go:generate stringer -type=EventType
 type EventType uint16
 
@@ -34,6 +35,7 @@ const (
 	evInventoryDeleteItem
 	evNewCharacter
 	evNewEquipmentItem
+	evNewSiegeBannerItem
 	evNewSimpleItem
 	evNewFurnitureItem
 	evNewKillTrophyItem
@@ -326,17 +328,17 @@ const (
 	evDebugDrawEvent
 	evRecordCameraMove
 	evRecordStart
-	evClaimPowerCrystalStart
-	evClaimPowerCrystalCancel
-	evClaimPowerCrystalReset
-	evClaimPowerCrystalFinished
+	evDeliverCarriableObjectStart
+	evDeliverCarriableObjectCancel
+	evDeliverCarriableObjectReset
+	evDeliverCarriableObjectFinished
 	evTerritoryClaimStart
 	evTerritoryClaimCancel
 	evTerritoryClaimFinished
 	evTerritoryScheduleResult
 	evTerritoryUpgradeWithPowerCrystalResult
-	evReturningPowerCrystalStart
-	evReturningPowerCrystalFinished
+	evReceiveCarriableObjectStart
+	evReceiveCarriableObjectFinished
 	evUpdateAccountState
 	evStartDeterministicRoam
 	evGuildFullAccessTagsUpdated
@@ -352,7 +354,7 @@ const (
 	evNewFloatObject
 	evNewFishingZoneObject
 	evFishingMiniGame
-	evSteamAchievementCompleted
+	evAlbionJournalAchievementCompleted
 	evUpdatePuppet
 	evChangeFlaggingFinished
 	evNewOutpostObject
@@ -475,12 +477,12 @@ const (
 	evUpdateFactionRank
 	evFactionWarfareCampaignRewardsUnlocked
 	evFeaturedFeatureUpdate
-	evNewPowerCrystalObject
+	evNewCarriableObject
 	evMinimapCrystalPositionMarker
-	evCarryPowerCrystalUpdate
-	evPickupPowerCrystalStart
-	evPickupPowerCrystalCancel
-	evPickupPowerCrystalFinished
+	evCarriedObjectUpdate
+	evPickupCarriableObjectStart
+	evPickupCarriableObjectCancel
+	evPickupCarriableObjectFinished
 	evDoSimpleActionStart
 	evDoSimpleActionCancel
 	evDoSimpleActionFinished
@@ -561,8 +563,8 @@ const (
 	evLegendaryItemDestroyed
 	evAttunementInfo
 	evTerritoryClaimRaidedRawEnergyCrystalResult
-	evCarryPowerCrystalExpiryWarning
-	evPowerCrystalExpired
+	evCarriedObjectExpiryWarning
+	evCarriedObjectExpired
 	evTerritoryRaidStart
 	evTerritoryRaidCancel
 	evTerritoryRaidFinished
@@ -571,4 +573,14 @@ const (
 	evTerritoryMonolithActiveRaidCancelled
 	evMonolithEnergyStorageUpdate
 	evMonolithNextScheduledOpenWorldAttackUpdate
+	evMonolithProtectedBuildingsDamageReductionUpdate
+	evNewBuildingBaseEvent
+	evNewFortificationBuilding
+	evNewCastleGateBuilding
+	evBuildingDurabilityUpdate
+	evMonolithFortificationPointsUpdate
+	evFortificationBuildingUpgradeInfo
+	evFortificationBuildingsDamageStateUpdate
+	evUpdateEnemyWarBannerActive
+	evTerritoryAnnouncePlayerEjection
 )

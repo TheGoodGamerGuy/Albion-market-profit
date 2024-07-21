@@ -94,6 +94,7 @@ func getBestProfit() {
 					fmt.Println("sell at " + sellLocation + ", price: " + strconv.Itoa(buyOrder.Price/10000))
 					fmt.Println("Profit: " + profit + " silver , buy " + name + " with " + quality + " quality and enchantment level " + enchantmentLevel)
 					fmt.Println("")
+					break
 				}
 			}
 		}
